@@ -28,12 +28,24 @@ echo "" >> /etc/apk/repositories
 echo "https://dl-cdn.alpinelinux.org/alpine/v3.15/main" >> /etc/apk/repositories
 echo "https://dl-cdn.alpinelinux.org/alpine/v3.15/community"  >> /etc/apk/repositories
 
+apk update 
+
 # =====================================================
 # Installing SSH server: 
 # =====================================================
 
 # adding and starting the openssh server package: 
-apk add openssh
+apk add --no-cache \
+    openssh \
+    ca-certificates \
+    curl \
+    device-mapper \
+    iptables \
+    openssl \
+    shadow \
+    sudo \
+    gnupg \
+    openrc
 
 # adding service to the system initialization: 
 rc-update add sshd

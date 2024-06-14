@@ -1,24 +1,18 @@
-apk update
-apk add --no-cache \
-    ca-certificates \
-    curl \
-    device-mapper \
-    iptables \
-    openssl \
-    shadow \
-    sudo \
-    gnupg \
-    openrc
+#!/bin/ash
+# Author: Arthur Cadore M. Barcella
+# Github: arthurcadore
+
+#NOTE: Execute alpine-startup first!
 
 # Installing Docker
-apk add --no-cache docker
+sudo apk add --no-cache docker
 
 # Starting Docker service
-rc-update add docker boot
-service docker start
+sudo rc-update add docker boot
+sudo service docker start
 
 # Adding docker permissions to the current user
-usermod -aG docker $USER
+sudo usermod -aG docker $USER
 
 # Installing Docker Compose
 DOCKER_COMPOSE_VERSION=2.0.1
