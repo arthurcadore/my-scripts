@@ -45,7 +45,8 @@ apk add --no-cache \
     shadow \
     sudo \
     gnupg \
-    openrc
+    openrc \
+    git
 
 # adding service to the system initialization: 
 rc-update add sshd
