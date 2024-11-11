@@ -17,7 +17,8 @@ sudo apt-get install -y \
              git \
              python3-pip \
              cmake \
-             golang-go
+             golang-go \
+             snmp 
 
 
 echo "enabling free access to tcpdump capturing interfaces..."
