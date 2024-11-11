@@ -15,6 +15,8 @@ sudo apt-get install -y \
              net-tools \
              tcpdump \
              git \
+             python3-pip \
+             cmake
 
 
 
