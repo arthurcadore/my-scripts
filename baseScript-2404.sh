@@ -16,8 +16,8 @@ sudo apt-get install -y \
              tcpdump \
              git \
              python3-pip \
-             cmake
-
+             cmake \
+             golang-go
 
 
 echo "enabling free access to tcpdump capturing interfaces..."
