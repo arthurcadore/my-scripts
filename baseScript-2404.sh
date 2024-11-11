@@ -28,3 +28,7 @@ echo "installing wireshark..."
 
 sudo apt-get install -y \
              wireshark
+
+
+echo "installing remmina (remote Desktop Client connector, for Windows)..."
+sudo apt install remmina remmina-plugin-rdp -y
