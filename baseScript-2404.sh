@@ -18,7 +18,11 @@ sudo apt-get install -y \
              python3-pip \
              cmake \
              golang-go \
-             snmp 
+             snmp \
+             sqlitebrowser \
+             sqlite3 \
+             picocom \ 
+             openssh-server 
 
 
 echo "enabling free access to tcpdump capturing interfaces..."
