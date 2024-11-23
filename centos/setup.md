@@ -3,9 +3,9 @@
 # set hostname
 
 ```bash
- hostnamectl set-hostname node1
- reboot now
- cat /etc/hosts
+hostnamectl set-hostname node1
+reboot now
+cat /etc/hosts
 ```
 
 # Enabling the IPv6 Stack protocol
@@ -48,8 +48,6 @@ DNS2=8.8.4.4
 ```bash
 systemctl restart NetworkManager
 nmcli connection reload
-nmcli connection up
-nmcli connection down ens18
 nmcli connection up ens18
 ```
 
@@ -88,7 +86,6 @@ systemctl status firewalld
 ## Allow root to run any commands anywhere
 echo "root ALL=(ALL) ALL" >> /etc/sudoers
 echo "cadore ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
-
 echo "cadore ALL=(root) NOPASSWD:/bin/bash" >> /etc/sudoers
 
 ## Allows members of the 'sys' group to run networking, software,
@@ -106,7 +103,7 @@ vim /etc/pam.d/login
 ```
 
 ```bash
-auth [user_unknown=ignore success=ok ignore=ignore auth_err=die default=bad] pam_securetty.so
+auth    [user_unknown=ignore success=ok ignore=ignore auth_err=die default=bad] pam_securetty.so
 ```
 
 ```bash
@@ -137,7 +134,7 @@ vim /etc/ssh/sshd_config
 
 ```bash
 Port 2222
-PermitRootLogin no
+PermitRootLogin yes
 ```
 
 ```bash
@@ -154,8 +151,9 @@ scp -P2222 infraremp@10.100.73.8:/home/infraremp/AD-CAMPUS/plat.zip /root/plat.z
 
 ```bash
 unzip /root/plat.zip
-unzip /root/plat/UDTP/UDTP_Matrix_V900R001B07D015_x86_64.zip
-cd /root/plat/UDTP/UDTP_Matrix_V900R001B07D015_x86_64
+cd /root/plat/UDTP
+unzip UDTP_Matrix_V900R001B07D015_x86_64.zip
+cd Matrix-V900R001B07D015-x86_64/
 ./install.sh
 ```
 
@@ -196,14 +194,15 @@ vim /opt/matrix/config/navigator_config.json
 ```json
 {
 "defaultLanguage":"en",
+"productName": "hp", 
 "pageList": ["SYS_CONFIG", "DEPLOY", "APP_DEPLOY"], 
 "defaultPackages": ["UDTP_Middle_E0715_x86.zip", "UDTP_GlusterFS_E0715_x86.zip", "UDTP_Core_E0715_x86.zip"],
 "url": "http://${vip}:30000/central/index.html#/ucenter-deploy",
 "theme":"darkblue",
 "matrixLeaderLeaseDuration": 30,
 "matrixLeaderRetryPeriod": 2,
-"sshPort": 22,
-"sshLoginMode": "passwd",
+"sshPort": 2222,
+"sshLoginMode": "secret",
 "features":{"stopNtpServerBeyondThreshold":"false"}
 }
 ```
@@ -214,3 +213,51 @@ vim /opt/matrix/config/navigator_config.json
 systemctl restart matrix
 ```
 
+--- 
+# Creating SSH keys
+
+```bash
+ssh-keygen -t ed25519
+```
+
+## Copying the public key to the remote server
+
+```bash
+ssh-copy-id -p 2222 -i ~/.ssh/id_ed25519.pub root@10.100.73.26
+ssh-copy-id -p 2222 -i ~/.ssh/id_ed25519.pub root@10.100.73.27
+```
+
+## to test it: 
+    
+```bash
+ ssh -p 22 root@10.100.73.26
+```
+
+
+# Installing the Unified Platform
+
+```bash
+sudo bash /opt/matrix/tools/env_check.sh -h
+sudo bash /opt/matrix/tools/env_check.sh
+```
+
+# Parameters of configuration: 
+
+```bash
+Northbound IP: 192.168.0.100
+Service Pool IP: 10.96.0.0/16
+Container Pool: 177.177.0.0/16
+VIP Mode: External
+Cluster Network Mode: Single Subnet
+NTP Server: Inner
+```
+
+For each node: 
+
+```bash
+IP: 10.100.73.25
+IP: 10.100.73.26
+IP: 10.100.73.27
+usuário: cadore
+senha: <senha>
+```
