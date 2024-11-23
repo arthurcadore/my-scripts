@@ -21,9 +21,17 @@ sudo apt-get install -y \
              snmp \
              sqlitebrowser \
              sqlite3 \
-             picocom \ 
-             openssh-server 
+             picocom \
+             iperf3
 
+
+echo "installing the QEMU guest agent..."
+
+sudo apt-get install -y \
+             qemu-guest-agent
+
+sudo systemctl start qemu-guest-agent
+sudo systemctl enable qemu-guest-agent
 
 echo "enabling free access to tcpdump capturing interfaces..."
 
@@ -37,3 +45,6 @@ sudo apt-get install -y \
 
 echo "installing remmina (remote Desktop Client connector, for Windows)..."
 sudo apt install remmina remmina-plugin-rdp -y
+
+echo "rebooting the system..."
+sudo reboot now
