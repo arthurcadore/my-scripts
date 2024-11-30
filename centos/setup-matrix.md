@@ -54,27 +54,23 @@ nmcli connection up ens18
 # Configuring the ntp service to use "200.160.7.186" as the time server and UTC +3 as the timezone
 
 ```bash
-yum install ntp -y
-systemctl enable ntpd
-systemctl start ntpd
-timedatectl set-timezone America/Sao_Paulo
-timedatectl set-ntp yes
+yum install ntp -y && \
+systemctl enable ntpd && \
+systemctl start ntpd && \
+timedatectl set-timezone America/Sao_Paulo && \
+timedatectl set-ntp yes && \
+timedatectl && \
+systemctl status ntpd
 ```
-
-# checking system time and date
-
-```bash
-timedatectl
-```
-
 ---
 # Installing Matrix: 
 
 ## Disabling the firewall 
 
 ```bash
-systemctl status firewalld
-systemctl stop firewalld && systemctl disable firewalld
+systemctl status firewalld && \
+systemctl stop firewalld && \
+systemctl disable firewalld && \
 systemctl status firewalld
 ```
 
@@ -84,8 +80,8 @@ systemctl status firewalld
 
 ```bash
 ## Allow root to run any commands anywhere
-echo "root ALL=(ALL) ALL" >> /etc/sudoers
-echo "cadore ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers
+echo "root ALL=(ALL) ALL" >> /etc/sudoers && \
+echo "cadore ALL=(ALL:ALL) NOPASSWD:ALL" >> /etc/sudoers && \
 echo "cadore ALL=(root) NOPASSWD:/bin/bash" >> /etc/sudoers
 
 ## Allows members of the 'sys' group to run networking, software,
@@ -93,9 +89,10 @@ echo "cadore ALL=(root) NOPASSWD:/bin/bash" >> /etc/sudoers
 # echo"%sys ALL = NETWORKING, SOFTWARE, SERVICES, STORAGE, DELEGATING, PROCESSES, LOCATE, DRIVERS" >> /etc/sudoers
 
 ## Allows people in group wheel to run all commands
-echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
-echo "cadore ALL=(root) NOPASSWD:/bin/bash" >> /etc/sudoers
-echo "cadore ALL=(root) NOPASSWD:/usr/bin/rpm,/bin/sh" >> /etc/sudoers
+echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers && \
+echo "cadore ALL=(root) NOPASSWD:/bin/bash" >> /etc/sudoers && \
+echo "cadore ALL=(root) NOPASSWD:/usr/bin/rpm,/bin/sh" >> /etc/sudoers && \
+cat /etc/sudoers
 ```
 
 ```bash
@@ -133,7 +130,7 @@ vim /etc/ssh/sshd_config
 ```
 
 ```bash
-Port 2222
+Port 22
 PermitRootLogin yes
 ```
 
@@ -150,10 +147,10 @@ scp -P2222 infraremp@10.100.73.8:/home/infraremp/AD-CAMPUS/plat.zip /root/plat.z
 ## Installing the unzip package
 
 ```bash
-unzip /root/plat.zip
-cd /root/plat/UDTP
-unzip UDTP_Matrix_V900R001B07D015_x86_64.zip
-cd Matrix-V900R001B07D015-x86_64/
+unzip /root/plat.zip && \
+cd /root/plat/UDTP && \
+unzip UDTP_Matrix_V900R001B07D015_x86_64.zip && \
+cd Matrix-V900R001B07D015-x86_64/ && \
 ./install.sh
 ```
 
@@ -201,8 +198,8 @@ vim /opt/matrix/config/navigator_config.json
 "theme":"darkblue",
 "matrixLeaderLeaseDuration": 30,
 "matrixLeaderRetryPeriod": 2,
-"sshPort": 2222,
-"sshLoginMode": "secret",
+"sshPort": 22,
+"sshLoginMode": "passwd",
 "features":{"stopNtpServerBeyondThreshold":"false"}
 }
 ```
@@ -244,7 +241,7 @@ sudo bash /opt/matrix/tools/env_check.sh
 # Parameters of configuration: 
 
 ```bash
-Northbound IP: 192.168.0.100
+Northbound IP: 10.100.73.30
 Service Pool IP: 10.96.0.0/16
 Container Pool: 177.177.0.0/16
 VIP Mode: External
@@ -256,8 +253,6 @@ For each node:
 
 ```bash
 IP: 10.100.73.25
-IP: 10.100.73.26
-IP: 10.100.73.27
 usuário: cadore
 senha: <senha>
 ```

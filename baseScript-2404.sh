@@ -22,7 +22,11 @@ sudo apt-get install -y \
              sqlitebrowser \
              sqlite3 \
              picocom \
-             iperf3
+             iperf3 \
+             nmap \
+             build-essential \
+             protobuf-compiler \
+             libprotobuf-dev \
 
 
 echo "installing the QEMU guest agent..."
