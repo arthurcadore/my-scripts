@@ -1,0 +1,127 @@
+oot@TELE-ederson-vm0:~# cd /root/
+root@TELE-ederson-vm0:~# ls -l
+total 55100
+drwxr-xr-x 10 root root     4096 Nov  5 10:43 backend
+drwxr-xr-x  3 root root     4096 Nov  4 23:28 go
+drwxr-xr-x  5 root root     4096 Nov  4 12:53 ifsc-ste-2024-2-libavr-arthurcadore
+-rw-r--r--  1 root root      149 Oct 25 18:02 k8s.comandos
+-rw-r--r--  1 root root     4464 Oct 25 18:10 kube-flannel-modificado.yml
+-rw-r--r--  1 root root     4406 Oct 23 10:18 kube-flannel.yml
+-rw-r--r--  1 root root 56381592 Nov 27 10:50 kubectl
+drwxr-xr-x  2 root root     4096 Nov 27 10:51 kubernetes
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# diff kube-flannel-modificado.yml kube-flannel.yml 
+84,86c84
+<       "Network": "10.0.0.0/16",
+<       "IPv6Network": "fc00::/48",
+<       "EnableIPv6": true,
+---
+>       "Network": "10.244.0.0/16",
+root@TELE-ederson-vm0:~# kubectl apply -f kube-flannel-modificado.yml 
+namespace/kube-flannel created
+serviceaccount/flannel created
+clusterrole.rbac.authorization.k8s.io/flannel created
+clusterrolebinding.rbac.authorization.k8s.io/flannel created
+configmap/kube-flannel-cfg created
+daemonset.apps/kube-flannel-ds created
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# kubectl get nodes
+NAME               STATUS   ROLES           AGE     VERSION
+tele-ederson-vm0   Ready    control-plane   4m55s   v1.31.2
+tele-ederson-vm1   Ready    <none>          2m53s   v1.31.2
+tele-ederson-vm2   Ready    <none>          2m22s   v1.31.2
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# ls -^C
+root@TELE-ederson-vm0:~# ^C
+root@TELE-ederson-vm0:~# cat /root/.kube/config 
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJU01rSG9mZUQ3MWt3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TkRFeU1EUXhOREF6TXpGYUZ3MHpOREV5TURJeE5EQTRNekZhTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUURuc253cDU2N0dUaXVkMnJUZEp1NStOZENpR1h1em1NeitaOGwzUmcwSTlEUEpCMDF6b2wzS3JGVXIKVUNRbVFWNER0MWRRLzN0RW9BaWZzRVNMdUVVNmkvbzJ5VklMMTBpQjUrak5tL05uaDcrMFVWVUdJYzFKOFZEVwo4ODdKUElBNi9mNC9mdFJqRDNLNFF6U005TFFWZkZHV0JmT2kraVRxZVJ3STdHWWRnWVRpWjJLOEV3dlJvVUMyCjZxZWF1ZmVlNm94cVFUdWdTTzU4WXRzemdzMFlmd2xPaU1XWVdBemV2YUUvVVJ4RHdtTUhXTHZpRkwxVFZrNWgKNmtLc2VWT29ubTVVcVB0SHllYTlvaS8yOXFvNFg3TGlORE5CdXhoL0V3L2JIZC9BNnZySFZld2dxNDVaRzVlcgpUaUZiMEJ3V1VOU2l0K2FSOUdaTnNFa21DZnh4QWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJTcWpTbUg4OWdWN01IWDZCbnNWcXdlYi93V0ZUQVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQUozVDFiQU9kMQpwQ29JbXRUOHBMMFUybHd5KzB4Vlo3ZGFyd3h4azlFV2lZckU4VW5pMEVURE5mU1VqQmNvWC9TTGRrbkZyZlozClB6czBUaDlKQStkVm9lTjNCWWdsRmd4aWhxK0hOLzNtdnJWTmpray9BU0ZOd21WSVlKc3pYajRiY0dJTWYzaHcKTW1oTUtaRHZueTdQOGN2eUdsRTBTQmlXbmxaa1Z6aExSWHdVNzlVM0tBN2ZwQTV5RFFGaVBaNjZhdUlqbmRPeApQcEN1ZFBWQXJxVGdrYmNmMU90NzhuSC9yaFk2Nkx1Wnp4eTZ6N2hMK2ZndkVCaHgyK0k5MXlqKzhRcW5uMGpDCi9iamRobnhyWWN0bzJNcHJUVFlJWk5oSE83U2hUMnFYRTU2cFl4ckNWeUVQUlFOQ05SSC9xUmZsK2pUQng4eE0KNThzMThyUXU5eHZiCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    server: https://vm0.pji3.sj.ifsc.edu.br:6443
+  name: kubernetes
+contexts:
+- context:
+    cluster: kubernetes
+    user: kubernetes-admin
+  name: kubernetes-admin@kubernetes
+current-context: kubernetes-admin@kubernetes
+kind: Config
+preferences: {}
+users:
+- name: kubernetes-admin
+  user:
+    client-certificate-data: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURLVENDQWhHZ0F3SUJBZ0lJSWF2TTZ5R2pmSjB3RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TkRFeU1EUXhOREF6TXpGYUZ3MHlOVEV5TURReE5EQTRNekZhTUR3eApIekFkQmdOVkJBb1RGbXQxWW1WaFpHMDZZMngxYzNSbGNpMWhaRzFwYm5NeEdUQVhCZ05WQkFNVEVHdDFZbVZ5CmJtVjBaWE10WVdSdGFXNHdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBd2dnRUtBb0lCQVFEV3ZpV3QKTzlMbFlMdU1HWks2cGprbUFzUzZQZVFhQ0MxOU83OVBRbll1R3JNOURJZXZPdUF5WUtaazZwRXdjVVlyQWx2ZQpMMEdDeWdySmQxOHNIUFdSZlBKbStpWjFQdXdSM0VDRitCeWlzWnQzRWdZWUcrYlhlY1Q1VFI2Y010aUNWaU5jCjRpZm5CcWdiNlR6V2E0NElmNTBKY3QzVURPZ0RPdE1NVlFPQjlSZDlRTUVXdTUrOFpLRzA4a2E1Y1NwUXFyVG0KRHJockwzTWltKzkvakNFUWJQYU5VZDl5cGVvajlWYVAycUpBQ0xiQTRIaDZ3VzI0M2dYZzZuOWpZOXJFOHFJVgpUTWlaQ0dPTk1ZeWhqeGNMSHVkNkl3MTNsVDh2YlZvUHpLQklXTEdwY2E0ckptVUtsTWhwa29BRE9rWXdNY2FzCndGVjNSNTVTZ3ZYK0QyT2xBZ01CQUFHalZqQlVNQTRHQTFVZER3RUIvd1FFQXdJRm9EQVRCZ05WSFNVRUREQUsKQmdnckJnRUZCUWNEQWpBTUJnTlZIUk1CQWY4RUFqQUFNQjhHQTFVZEl3UVlNQmFBRktxTktZZnoyQlhzd2RmbwpHZXhXckI1di9CWVZNQTBHQ1NxR1NJYjNEUUVCQ3dVQUE0SUJBUUN4ZmVGaFdEZTZlbGxwSDRkNWhxekxyQW03ClBiZXl2R3B1dHp4K0w1SktWODFUV3dMRWE2SEJYMXVEVWFZQlNUc1VNbkJkYjFscDAzVjcrUnFKWldTcnVkNkwKUnF4VVZTZ1pwT0JvVWFPcGJ2SjY1bGNLSzlPeEdldzJIOW1YQ1p2WDA4Q1ZQbmcwdFB2SENzYzRmdDFtdUk0bQpCbDhTem0yV2RMUjltZ0VDcE04Mjc2RjIyWGJERHZyc3VPSXNFeUlpYmw4VzNhY3BhT21VQk5HaDJjQ0dEZ20xClVzVHFjVnExT3FiemJDY2pMMUhLZ3RIU1M4STlXVm1jcEZ3TkZFaGNPNUZXRXNyVE5vYlFXbnErWXVsSHVTZTMKMlVkejR5TXduZ0JHa1BjZWdyTFJCZldvaENFc3lQQmxxUVJPYjdyR2hTSGFJbS9xL0t0WXkyL0M5V1BxCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    client-key-data: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBMXI0bHJUdlM1V0M3akJtU3VxWTVKZ0xFdWoza0dnZ3RmVHUvVDBKMkxocXpQUXlICnJ6cmdNbUNtWk9xUk1IRkdLd0piM2k5Qmdzb0t5WGRmTEJ6MWtYenladm9tZFQ3c0VkeEFoZmdjb3JHYmR4SUcKR0J2bTEzbkUrVTBlbkRMWWdsWWpYT0luNXdhb0crazgxbXVPQ0grZENYTGQxQXpvQXpyVERGVURnZlVYZlVEQgpGcnVmdkdTaHRQSkd1WEVxVUtxMDVnNjRheTl6SXB2dmY0d2hFR3oyalZIZmNxWHFJL1ZXajlxaVFBaTJ3T0I0CmVzRnR1TjRGNE9wL1kyUGF4UEtpRlV6SW1RaGpqVEdNb1k4WEN4N25laU1OZDVVL0wyMWFEOHlnU0ZpeHFYR3UKS3labENwVElhWktBQXpwR01ESEdyTUJWZDBlZVVvTDEvZzlqcFFJREFRQUJBb0lCQUJzU1lhR1ROeVVmcXNVZwp2RFMzbStERTNKUTJGVG1LNm1FdFZSTGk2QThyNG9qQnVhRkhwTmYxQTBVWnBUQWNONkpZYThoNDRLTmlZVFhBCnpNaTg1ZUJ2aGdlaFpaUEdXUEJ2ZWRycHlvSmdMWjgzTUhsOW12NXpKWGZnVndtT0IybDIvb0pKS0lxaGRqUCsKbFdMYXNFODE5MUFub1B1SW5QODdQVHdDdzZ4d1JGT3AzTmx6bFA2RUYwWDZRbXNlakFEVDNJcUtBUVZ5Zy9IbgphWU1rYU4rb09rNVZOZ1VuMEZ0TFpsYXk4cnZ5aHF5SWNCbWRVc2JjWVpVNlBQSEpXenFrNDB1T1lwSVZEb1J3CmNScWw5VXJMbldTZ0ZzNlMxeEs3bm8wdDE1N2NuRkVOUWN1NVJoSVluc0IwbGQ5M0p6bkNYMzhEMEovL2l5aGMKVEkzSHZra0NnWUVBMzBTN3R0QzBEbmlYNVczSitSSkVjcWVVOXVEQVlkbUYvWVNxQnRJSWc4REhocElHaDhJMQo2U1NHeEJUMXVhWmtsUVVxSHhwZStCZnVBemhTUndlY0w3Znc4Y05zQzVHTVVMbDVvbVY1Y0IyQ1l4VHFicTV0CnpCNUp3eVAyYUNoeC9zZU9HakxwVlZXQURuWDJsT3JGU2pUcVFJTEhkT0lpU2wwQ0pGbDdRNHNDZ1lFQTlqbHgKZ09nQnlsWXIzZDBqOUFCQ0g5b3JjNVR2eU92bndqTVEyYW5zR0tGWjVZV3dkNmVVdEoybWF6L3JublNxN2VTago3SjNnanFpMXZwQ3Q5Mm1tNnBJTnRvRE1wL0hlVnhKMisreXE0UGlkTVdqVTNZcVRLa1BQTlRzbGxDRUNiTTNpCnZ3SStuZkwzMG1XSUJBR08zZFhzYzFnSm50WjFIREJFbmdUZkc0OENnWUFwZWl4aFB3NWtMZFVTSXo1RlRqWjMKRWxqak1FZXRKZXIxZVFMWk40V3JiRkhrMXhYdGZJL2xXd3JLUEphVndhcW40SWk5dEhsMkg0UHhCektKellrZgplRTJEckdsVEVOdi9WeVdZbkw5ZHE2M0FXRzlnMW5qQlZkTWdOSHNmU0h3ODk3ZVhlR1BPblk2bm9SU0kvOEJkCkU4MTg1STdIVVFkTHgxR1JqU29RRndLQmdRQ1hNTHFqZnRMcW5YTWVMdFlPMDhIR3NUNlJJRmtFdE9hQWRyN1kKQ09EeVZ0Rk9nSUxWVmsrWGdGNVo2TXdUWm13MjIzaFVxTFRrcEcvRTdpNEVpQmw0VytxVHNBNzY2U2V2cTZUbwpHSERzNTN3T2hPS0Fqc0RDNlJScENVS1A3SjBDbG9HdTYvL3JHUEJYZndUQUFQenE5cHJVVUxESG1jUWJaUUFkClQ3eDN2UUtCZ1FDSGlOS09acmlFbFJ5OVZpTjVxMnNVVk9MMjlCV2pjZ3BObUsrQnBkYng2eHF0VXFoRWpjT1oKNlUzMW9sdjlpQWdKQmNOR2hyclhFSlp1Q2lGeEpjSm1OT2RzQjZzcmtSNmpIOVdQUlRXSFFUMmQwSWxLR0FKNgpaZTlVZDE5TU9lUGVmUWtFajlxYXdqVEdHdFlodGQ2T2g0M2Y1NUNsZFIwRjB0Vmd4M282TUE9PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo=
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# ls -l
+total 55100
+drwxr-xr-x 10 root root     4096 Nov  5 10:43 backend
+drwxr-xr-x  3 root root     4096 Nov  4 23:28 go
+drwxr-xr-x  5 root root     4096 Nov  4 12:53 ifsc-ste-2024-2-libavr-arthurcadore
+-rw-r--r--  1 root root      149 Oct 25 18:02 k8s.comandos
+-rw-r--r--  1 root root     4464 Oct 25 18:10 kube-flannel-modificado.yml
+-rw-r--r--  1 root root     4406 Oct 23 10:18 kube-flannel.yml
+-rw-r--r--  1 root root 56381592 Nov 27 10:50 kubectl
+drwxr-xr-x  2 root root     4096 Nov 27 10:51 kubernetes
+root@TELE-ederson-vm0:~# kubectl get nodes
+NAME               STATUS   ROLES           AGE     VERSION
+tele-ederson-vm0   Ready    control-plane   10m     v1.31.2
+tele-ederson-vm1   Ready    <none>          8m18s   v1.31.2
+tele-ederson-vm2   Ready    <none>          7m47s   v1.31.2
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# kubectl get nodes --show-labels
+NAME               STATUS   ROLES           AGE     VERSION   LABELS
+tele-ederson-vm0   Ready    control-plane   3h38m   v1.31.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=tele-ederson-vm0,kubernetes.io/os=linux,node-role.kubernetes.io/control-plane=,node.kubernetes.io/exclude-from-external-load-balancers=
+tele-ederson-vm1   Ready    <none>          3h36m   v1.31.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=tele-ederson-vm1,kubernetes.io/os=linux
+tele-ederson-vm2   Ready    <none>          3h35m   v1.31.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=tele-ederson-vm2,kubernetes.io/os=linux
+root@TELE-ederson-vm0:~# kubectl label node tele-ederson-vm1 node-role.kubernetes.io/worker=worker
+node/tele-ederson-vm1 labeled
+root@TELE-ederson-vm0:~# kubectl label node tele-ederson-vm2 node-role.kubernetes.io/worker=worker
+node/tele-ederson-vm2 labeled
+root@TELE-ederson-vm0:~# kubectl get nodes --show-labels
+NAME               STATUS   ROLES           AGE     VERSION   LABELS
+tele-ederson-vm0   Ready    control-plane   3h39m   v1.31.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=tele-ederson-vm0,kubernetes.io/os=linux,node-role.kubernetes.io/control-plane=,node.kubernetes.io/exclude-from-external-load-balancers=
+tele-ederson-vm1   Ready    worker          3h37m   v1.31.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=tele-ederson-vm1,kubernetes.io/os=linux,node-role.kubernetes.io/worker=worker
+tele-ederson-vm2   Ready    worker          3h36m   v1.31.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=tele-ederson-vm2,kubernetes.io/os=linux,node-role.kubernetes.io/worker=worker
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# kubectl get nodes --show-labels
+NAME               STATUS   ROLES           AGE     VERSION   LABELS
+tele-ederson-vm0   Ready    control-plane   3h39m   v1.31.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=tele-ederson-vm0,kubernetes.io/os=linux,node-role.kubernetes.io/control-plane=,node.kubernetes.io/exclude-from-external-load-balancers=
+tele-ederson-vm1   Ready    worker          3h37m   v1.31.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=tele-ederson-vm1,kubernetes.io/os=linux,node-role.kubernetes.io/worker=worker
+tele-ederson-vm2   Ready    worker          3h36m   v1.31.2   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=tele-ederson-vm2,kubernetes.io/os=linux,node-role.kubernetes.io/worker=worker
+root@TELE-ederson-vm0:~# kubectl get nodes
+NAME               STATUS   ROLES           AGE     VERSION
+tele-ederson-vm0   Ready    control-plane   3h39m   v1.31.2
+tele-ederson-vm1   Ready    worker          3h37m   v1.31.2
+tele-ederson-vm2   Ready    worker          3h36m   v1.31.2
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
+root@TELE-ederson-vm0:~# 
