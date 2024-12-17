@@ -49,6 +49,7 @@ containerd config default > /etc/containerd/config.toml
 
 
 systemdCgroup = true
+alterar versão pra 3.10
 
  systemctl restart containerd
 
