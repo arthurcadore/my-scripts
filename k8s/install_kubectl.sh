@@ -1,3 +1,4 @@
+#!/bin/bash
 # Description: Install kubectl on Linux 
 # Author: Arthur Cadore M. Barcella
 
