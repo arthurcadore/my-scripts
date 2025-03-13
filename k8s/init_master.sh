@@ -11,3 +11,17 @@ kubeadm init --v=5 --control-plane-endpoint=vm0.k8s.sj.ifsc.edu.br --pod-network
 
 echo "Copying containerd configuration file to /etc/containerd/config.toml..."
 cat containerd-config2.toml | sudo tee /etc/containerd/config.toml
+
+
+echo "Copying kubeconfig to $HOME/.kube/config..."
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+
+echo "restart the containerd service..."
+sudo systemctl restart containerd
+
+echo "restarting the kubelet service..."
+sudo systemctl restart kubelet
+
+echo "installing the kubeflannel-mod file..."
+kubectl apply -f ./kubeflannel-mod.yaml
