@@ -10,4 +10,4 @@ kubeadm init --v=5 --control-plane-endpoint=vm0.k8s.sj.ifsc.edu.br --pod-network
 
 
 echo "Copying containerd configuration file to /etc/containerd/config.toml..."
-cat containerd-config.toml | sudo tee /etc/containerd/config.toml
+cat containerd-config2.toml | sudo tee /etc/containerd/config.toml
