@@ -10,6 +10,14 @@
 
 Example command: 
 
+`./env/.credentials` file structure: 
+
+```
+ENV_KUBE_TOKEN=rvw55j.asdasdasdasdasdasd
+ENV_KUBE_HASH=f9af0bc0fd1812d3b3447c4a1f1a9456asdasdasdasdasdasdasdasdasdasda
+KUBE_MASTER_ADDR=vm0.k8s.sj.ifsc.edu.br
+```
+
 ```bash
 kubeadm reset
 kubeadm init --v=5 --control-plane-endpoint=<FQDN> --pod-network-cidr=<PREFIX>/<CIDR> --service-cidr=<PREFIX>/<CIDR>

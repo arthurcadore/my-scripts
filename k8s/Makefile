@@ -1,6 +1,5 @@
-export ENV_KUBE_TOKEN ?= TOKEN_HERE
-export ENV_KUBE_HASH ?= HASH_HERE
-export KUBE_MASTER_ADDR ?= ADDRESS_HERE
+include ./env/.credentials.env
+export
 
 master: install-docker install-kubectl configure-runtime install-kubeadm
 	./init_master.sh
